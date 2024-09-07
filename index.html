@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Resume</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #8ce2ee; /* Add full background color */
+    }
+    .section {
+      margin: 20px 0;
+      border: 1px solid #ccc;
+      padding: 10px;
+      position: relative;
+      background-color: white; /* Section background to contrast */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+    }
+    .section:hover {
+      background-color: #f9f9f9;
+    }
+    .edit-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: rgb(5, 60, 65);
+    }
+    .input-field {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .save-button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #274e4e;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Resume</h1>
+
+  <div id="education-section" class="section">
+    <h3>Education <span class="edit-button" onclick="editSection('education')">Edit</span></h3>
+    <p id="education-content">Bachelor of Science in Computer Science</p>
+  </div>
+
+  <div id="work-section" class="section">
+    <h3>Work Experience <span class="edit-button" onclick="editSection('work')">Edit</span></h3>
+    <p id="work-content">Software Engineer at NCR CDC</p>
+  </div>
+
+  <script>
+    // Function to enable editing of a section
+    function editSection(section) {
+      const sectionElement = document.getElementById(`${section}-section`);
+      const contentElement = document.getElementById(`${section}-content`);
+      const currentText = contentElement.innerText;
+
+      sectionElement.innerHTML = `
+        <h3>${section.charAt(0).toUpperCase() + section.slice(1)} 
+          <span class="edit-button" onclick="editSection('${section}')">Edit</span>
+        </h3>
+        <textarea class="input-field" id="${section}-input">${currentText}</textarea>
+        <button class="save-button" onclick="saveSection('${section}')">Save</button>
+      `;
+    }
+
+    // Function to save the updated text
+    function saveSection(section) {
+      const inputElement = document.getElementById(`${section}-input`);
+      const updatedText = inputElement.value;
+      
+      // Replace the section content with the updated text
+      document.getElementById(`${section}-section`).innerHTML = `
+        <h3>${section.charAt(0).toUpperCase() + section.slice(1)} 
+          <span class="edit-button" onclick="editSection('${section}')">Edit</span>
+        </h3>
+        <p id="${section}-content">${updatedText}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
